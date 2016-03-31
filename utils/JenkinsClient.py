@@ -14,7 +14,7 @@ class JenkinsClient:
         jenkins_jobs_url = self.url + '/api/json?tree=jobs[name,url,lastBuild[number,result,timestamp]]'
         print jenkins_jobs_url
         response = self._do_request(jenkins_jobs_url)
-        print response.json()['jobs']
+        return response.json()['jobs']
 
     def get_job_console_output(self, job):
         console_output_url = '{job_url}{build_number}/consoleText'.format(job_url=job['url'], build_number=job['lastBuild']['number'])
