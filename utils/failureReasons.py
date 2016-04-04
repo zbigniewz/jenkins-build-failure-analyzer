@@ -42,6 +42,47 @@ possible_reasons = [
             '\[ERROR\] Failed to execute goal org\.apache\.maven\.plugins:maven-compiler-plugin'
         ],
         'graphite key': 'failed_compilation'
+    },
+    {
+        'name': 'missing jacoco plugin',
+        'description': 'project pom does not have jacoco plugin for code static analysis',
+        'regex': [
+            "\[ERROR\] No plugin found for prefix 'jacoco'"
+        ],
+        'graphite key': 'missing_jacoco'
+    },
+    {
+        'name': 'npm fetch failed',
+        'description': 'npm failed while fetching libs, probably problem with npm proxy or npm itself',
+        'regex': [
+            'npm ERR. fetch failed'
+        ],
+        'graphite key': 'npm_fetch'
+    },
+    {
+        'name': 'illegal live deployment',
+        'description': 'Trying to deploy app to live outside of deployment window',
+        'regex': [
+            'Live-Deployments are only allowed Monday - Thursday'
+        ],
+        'graphite key': 'illegal_live_deployment'
+    },
+    {
+        'name': 'failed deployment',
+        'description': 'Failed deployment - app not started?',
+        'regex': [
+            'ERROR. App has been successfully deployed but it could not be started.',
+            'Fatal error. ERROR. deployment was not successful'
+        ],
+        'graphite key': 'failed_deployment'
+    },
+    {
+        'name': 'Docker container not started',
+        'description': 'Docker container has not started, maybe docker deamon problem?',
+        'regex': [
+            'Error response from daemon. Cannot start container'
+        ],
+        'graphite key': 'docker_cntnr_not_started'
     }
 ]
 
