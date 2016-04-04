@@ -37,37 +37,31 @@ def find_failure_reason(console_output):
         for regex in reason['regex']:
             match = re.search(regex, console_output)
             if match:
-                return reason
-    return failureReasons.unknown_reason
+                return reason['name']
+    return failureReasons.unknown_reason['name']
 
 
 def update_results(results, reason, job):
-    if reason['name'] in results:
-        results[reason['name']]['count'] += 1
-        results[reason['name']]['jobs'].append({
-            'job name': job['name'],
-            'build url': '{job_url}{build_number}/console'.format(job_url=job['url'],
-                                                                  build_number=job['lastBuild']['number'])
-        })
-    else:
-        results[reason['name']] = {
-            'count': 1,
-            'jobs': [
+    for entry in results:
+        if entry['name'] == reason:
+            entry['count'] += 1
+            entry['job'].append(
                 {
                     'job name': job['name'],
                     'build url': '{job_url}{build_number}/console'.format(job_url=job['url'],
                                                                           build_number=job['lastBuild']['number'])
                 }
-            ],
-            'description': reason['description'],
-            'regex': reason['regex'],
-            'graphite key' : reason['graphite key']
-        }
+            )
+            break
     return results
 
 
 def analyze_jobs(filtered_jobs, jenkins_server):
-    results = {}
+    results = failureReasons.possible_reasons
+    results.append(failureReasons.unknown_reason)
+    for entry in results:
+        entry['count'] = 0
+        entry['job'] = []
     counter = 0
     for job in filtered_jobs:
         counter += 1
@@ -83,14 +77,14 @@ def print_results(results):
     pp = pprint.PrettyPrinter()
     pp.pprint(results)
     print '\n\n\n Quick summary:\n'
-    for key, value in results.iteritems():
-        print '{reason} : {count}'.format(reason=key, count=value['count'])
+    for entry in results:
+        print '{reason} : {count}'.format(reason=entry['name'], count=entry['count'])
 
 
 def report_to_graphite(host, port, prefix, results):
     statsd = StatsClient(host=host, port=port, prefix=prefix, maxudpsize=512)
-    for key, value in results.iteritems():
-        statsd.gauge(value['graphite key'], value['count'])
+    for entry in results:
+        statsd.gauge(entry['graphite key'], entry['count'])
 
 
 def create_arg_parser():
