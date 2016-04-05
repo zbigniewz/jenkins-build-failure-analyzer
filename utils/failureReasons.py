@@ -79,7 +79,7 @@ possible_reasons = [
     },
     {
         'name': 'Docker container not started',
-        'description': 'Docker container has not started, maybe docker deamon problem?',
+        'description': 'Docker container has not started, maybe docker daemon problem?',
         'regex': [
             'Error response from daemon. Cannot start container',
             'Cannot start container',
@@ -97,12 +97,21 @@ possible_reasons = [
     },
     {
         'name': 'AWS live docker error',
-        'description': 'Failed to push to AWS live docker registry 10.152.5.248.',
+        'description': 'Failed to push to AWS live docker registry.',
         'regex': [
-            'write tcp 10.152.5.248:5000: connection reset by peer'
+            'write tcp \d{1,3}\.152.\d{1,3}\.\d{1,3}:5000: connection reset by peer'
         ],
         'graphite key': 'aws_docker_live_error'
+    },
+    {
+        'name': 'AWS live docker error',
+        'description': 'Failed to push to AWS quality docker registry.',
+        'regex': [
+            'write tcp \d{1,3}\.130.\d{1,3}\.\d{1,3}:5000: connection reset by peer'
+        ],
+        'graphite key': 'aws_docker_quality_error'
     }
+
 ]
 
 # used when non of above is matching
