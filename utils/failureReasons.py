@@ -6,7 +6,8 @@ possible_reasons = [
             '\[ERROR\] Failed to execute goal org\.apache\.maven\.plugins:maven-surefire-plugin',
             '\[ERROR\] ACC test failed\. exit\(1\)',
             'Failures:',
-            '-----------------------------------FAILURE LIST-----------------------------------'
+            '-----------------------------------FAILURE LIST-----------------------------------',
+            'npm ERR. Test failed.  See above for more details'
         ],
         'graphite key': 'failed_tests'
     },
@@ -80,9 +81,19 @@ possible_reasons = [
         'name': 'Docker container not started',
         'description': 'Docker container has not started, maybe docker deamon problem?',
         'regex': [
-            'Error response from daemon. Cannot start container'
+            'Error response from daemon. Cannot start container',
+            'Cannot start container',
+            'Error response from daemon. conflict. unable to delete'
         ],
         'graphite key': 'docker_cntnr_not_started'
+    },
+    {
+        'name': 'Fastlane error',
+        'description': 'Fastlane script encounter some issues.',
+        'regex': [
+            'OSError: \[Errno 2\] No such file or directory'
+        ],
+        'graphite key': 'fastlane_error'
     }
 ]
 
