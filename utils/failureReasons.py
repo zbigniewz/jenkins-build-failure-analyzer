@@ -94,6 +94,14 @@ possible_reasons = [
             'OSError: \[Errno 2\] No such file or directory'
         ],
         'graphite key': 'fastlane_error'
+    },
+    {
+        'name': 'AWS live docker error',
+        'description': 'Failed to push to AWS live docker registry 10.152.5.248.',
+        'regex': [
+            'write tcp 10.152.5.248:5000: connection reset by peer'
+        ],
+        'graphite key': 'aws_docker_live_error'
     }
 ]
 
