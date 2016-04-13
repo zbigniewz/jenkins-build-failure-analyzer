@@ -13,7 +13,6 @@ class JenkinsClient:
 
     def get_all_jobs(self):
         jenkins_jobs_url = self.url + '/api/json?tree=jobs[name,url,lastBuild[number,result,timestamp]]'
-        print jenkins_jobs_url
         response = self._do_request(jenkins_jobs_url)
         return response.json()['jobs']
 
