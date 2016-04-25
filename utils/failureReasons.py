@@ -7,7 +7,8 @@ possible_reasons = [
             '\[ERROR\] ACC test failed\. exit\(1\)',
             'Failures:',
             '-----------------------------------FAILURE LIST-----------------------------------',
-            'npm ERR. Test failed.  See above for more details'
+            'npm ERR. Test failed.  See above for more details',
+            'FAILURES!'
         ],
         'graphite key': 'failed_tests'
     },
@@ -110,8 +111,15 @@ possible_reasons = [
             'write tcp \d{1,3}\.130.\d{1,3}\.\d{1,3}:5000: connection reset by peer'
         ],
         'graphite key': 'aws_docker_quality_error'
+    },
+    {
+        'name': 'pulp timeout',
+        'description': 'Failed to download dependecies from pulp beacuse of pulp timeout',
+        'regex': [
+            'Timeout on http:\/\/pulp.'
+        ],
+        'graphite key': 'pulp_timeout'
     }
-
 ]
 
 # used when non of above is matching
