@@ -73,7 +73,7 @@ possible_reasons = [
         'description': 'Failed deployment - app not started?',
         'regex': [
             'ERROR. App has been successfully deployed but it could not be started.',
-            'Fatal error. ERROR. deployment was not successful'
+            'Fatal error. ERROR. (d|D)eployment was not successful'
         ],
         'graphite key': 'failed_deployment'
     },
