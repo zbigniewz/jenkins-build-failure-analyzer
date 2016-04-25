@@ -116,7 +116,7 @@ possible_reasons = [
         'name': 'pulp timeout',
         'description': 'Failed to download dependecies from pulp beacuse of pulp timeout',
         'regex': [
-            'Timeout on http:\/\/pulp.'
+            '.*Timeout on http...pulp.*'
         ],
         'graphite key': 'pulp_timeout'
     }
