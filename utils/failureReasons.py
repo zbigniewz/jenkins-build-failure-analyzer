@@ -8,7 +8,8 @@ possible_reasons = [
             'Failures:',
             '-----------------------------------FAILURE LIST-----------------------------------',
             'npm ERR. Test failed.  See above for more details',
-            'FAILURES!'
+            'FAILURES!',
+            '>>>>>> Class: Kitchen::ActionFailed'
         ],
         'graphite key': 'failed_tests'
     },
