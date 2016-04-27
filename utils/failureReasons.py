@@ -25,7 +25,8 @@ possible_reasons = [
         'name': 'sonar violations',
         'description': 'project can\'t build because it is breaking sonar rules',
         'regex': [
-            '\[ERROR\] Failed to execute goal org\.sonarsource\.scanner\.maven:sonar-maven-plugin'
+            '\[ERROR\] Failed to execute goal org\.sonarsource\.scanner\.maven:sonar-maven-plugin',
+            "It looks like an analysis of '.*' is already running"
         ],
         'graphite key': 'sonar_violation'
     },
