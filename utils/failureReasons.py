@@ -7,6 +7,7 @@ possible_reasons = [
             '\[ERROR\] ACC test failed\. exit\(1\)',
             'Failures:',
             '-----------------------------------FAILURE LIST-----------------------------------',
+            '=================================== FAILURES ===================================',
             'npm ERR. Test failed.  See above for more details',
             'FAILURES!',
             '>>>>>> Class: Kitchen::ActionFailed'
