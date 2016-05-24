@@ -10,7 +10,8 @@ possible_reasons = [
             '=================================== FAILURES ===================================',
             'npm ERR. Test failed.  See above for more details',
             'FAILURES!',
-            '>>>>>> Class: Kitchen::ActionFailed'
+            '>>>>>> Class: Kitchen::ActionFailed',
+            'make: \*\*\* \[test-phpspec\] Error 1'
         ],
         'graphite key': 'failed_tests'
     },
