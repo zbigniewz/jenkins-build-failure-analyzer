@@ -5,7 +5,6 @@ possible_reasons = [
         'regex': [
             '\[ERROR\] Failed to execute goal org\.apache\.maven\.plugins:maven-surefire-plugin',
             '\[ERROR\] ACC test failed\. exit\(1\)',
-            'Failures:',
             '-----------------------------------FAILURE LIST-----------------------------------',
             '=================================== FAILURES ===================================',
             'npm ERR. Test failed.  See above for more details',
