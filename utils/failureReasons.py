@@ -10,7 +10,10 @@ possible_reasons = [
             'npm ERR. Test failed.  See above for more details',
             'FAILURES!',
             '>>>>>> Class: Kitchen::ActionFailed',
-            'make: \*\*\* \[test-phpspec\] Error 1'
+            'make: \*\*\* \[test-phpspec\] Error 1',
+            'Tests in error: ',
+            'Failed tests: ',
+            '\[ERROR\] E2E test failed\. exit\(1\)'
         ],
         'graphite key': 'failed_tests'
     },
