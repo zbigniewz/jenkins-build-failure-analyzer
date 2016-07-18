@@ -126,6 +126,14 @@ possible_reasons = [
             '.*Timeout on http...pulp.*'
         ],
         'graphite key': 'pulp_timeout'
+    },
+    {
+        'name': 'jenkins failed to mkdir',
+        'description': 'Jenkins failed to create dir, probably missing rights or corrupted fs',
+        'regex': [
+            '.*java.io.IOException. Failed to mkdirs.*'
+        ],
+        'graphite key': 'failed_to_mkdir'
     }
 ]
 
