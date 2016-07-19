@@ -13,7 +13,8 @@ possible_reasons = [
             'make: \*\*\* \[test-phpspec\] Error 1',
             'Tests in error: ',
             'Failed tests: ',
-            '\[ERROR\] E2E test failed\. exit\(1\)'
+            '\[ERROR\] E2E test failed\. exit\(1\)',
+            'make: \*\*\* \[test-phpspec-with-code-coverage\] Error 1'
         ],
         'graphite key': 'failed_tests'
     },
