@@ -102,7 +102,7 @@ possible_reasons = [
             'ERROR. App has been successfully deployed but it could not be started.',
             'Fatal error. ERROR. (d|D)eployment was not successful',
             "requests.exceptions.ConnectionError: .'Connection aborted.', error.110, 'Connection timed out'.",
-            'Cannot ping targethost .* Server down'
+            'Fatal error. ERROR. Cannot ping targethost.*Server down.*'
         ],
         'graphite key': 'failed_deployment'
     },
