@@ -5,7 +5,7 @@ possible_reasons = [
         'regex': [
             '\[ERROR\] Failed to execute goal org\.apache\.maven\.plugins:maven-surefire-plugin',
             '\[ERROR\] ACC test failed\. exit\(1\)',
-            '[0-9]+ tests, [0-9]+ assertions, [1-9][0-9]* failure, [0-9]+ skipped',
+            '[0-9]+ tests, [0-9]+ assertions, [1-9][0-9]* failures?, [0-9]+ skipped',
             '-----------------------------------FAILURE LIST-----------------------------------',
             '=================================== FAILURES ===================================',
             'npm ERR. Test failed.  See above for more details',
@@ -101,7 +101,8 @@ possible_reasons = [
         'regex': [
             'ERROR. App has been successfully deployed but it could not be started.',
             'Fatal error. ERROR. (d|D)eployment was not successful',
-            "requests.exceptions.ConnectionError: .'Connection aborted.', error.110, 'Connection timed out'."
+            "requests.exceptions.ConnectionError: .'Connection aborted.', error.110, 'Connection timed out'.",
+            'Cannot ping targethost .* Server down'
         ],
         'graphite key': 'failed_deployment'
     },
