@@ -5,6 +5,7 @@ possible_reasons = [
         'regex': [
             '\[ERROR\] Failed to execute goal org\.apache\.maven\.plugins:maven-surefire-plugin',
             '\[ERROR\] ACC test failed\. exit\(1\)',
+            '[0-9]+ tests, [0-9]+ assertions, [1-9][0-9]* failure, [0-9]+ skipped',
             '-----------------------------------FAILURE LIST-----------------------------------',
             '=================================== FAILURES ===================================',
             'npm ERR. Test failed.  See above for more details',
@@ -53,6 +54,22 @@ possible_reasons = [
         'graphite key': 'failed_compilation'
     },
     {
+        'name': 'docker image tag not found',
+        'description': 'docker image tag not found',
+        'regex': [
+            'Tag .* not found in repository'
+        ],
+        'graphite key': 'tag_not_found'
+    },
+    {
+        'name': 'host not resovled',
+        'description': 'Hostname could not be resolved',
+        'regex': [
+            'no such host',
+            'Could not resolve host',
+            'Couldn\'t resolve host'
+        ],
+        'graphite key': 'host_not_resolved'
         'name': 'missing jacoco plugin',
         'description': 'project pom does not have jacoco plugin for code static analysis',
         'regex': [
@@ -145,5 +162,3 @@ unknown_reason = {
     'regex': [''],
     'graphite key': 'unknown'
 }
-
-
