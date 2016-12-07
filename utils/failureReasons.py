@@ -70,6 +70,8 @@ possible_reasons = [
             'Couldn\'t resolve host'
         ],
         'graphite key': 'host_not_resolved'
+    },
+    {
         'name': 'missing jacoco plugin',
         'description': 'project pom does not have jacoco plugin for code static analysis',
         'regex': [
