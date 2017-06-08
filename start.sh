@@ -2,8 +2,10 @@
 
 # use when you want to monitor jenkins constantly
 
+docker build -t jenkins-build-failure-analyzer .
+
 while true
 do
-        python analyzer.py URL_TO_JENKINS JENKINS_USER JENKINS_PASS STATSD_HOST STATSD_PORT GRAPHITE_KEY
+        docker run -t jenkins-build-failure-analyzer https://MY.JENKINS.URL JENKINS_USER JENKINS_PASSWORD STATSD.HOST STATSD.PORT METRIC.KEY
         sleep 1800
 done
