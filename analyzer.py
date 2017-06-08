@@ -65,7 +65,7 @@ def analyze_jobs(filtered_jobs, jenkins_server):
     counter = 0
     for job in filtered_jobs:
         counter += 1
-        print "Analyzing job {id} / {all}".format(id=counter, all=len(filtered_jobs))
+        print("Analyzing job {id} / {all}".format(id=counter, all=len(filtered_jobs)))
         console_output = jenkins_server.get_job_console_output(job)
         failure_reason = find_failure_reason(console_output)
         results = update_results(results, failure_reason, job)
@@ -73,12 +73,12 @@ def analyze_jobs(filtered_jobs, jenkins_server):
 
 
 def print_results(results):
-    print '\n Full results:\n'
+    print('\n Full results:\n')
     pp = pprint.PrettyPrinter()
     pp.pprint(results)
-    print '\n\n\n Quick summary:\n'
+    print('\n\n\n Quick summary:\n')
     for entry in results:
-        print '{reason} : {count}'.format(reason=entry['name'], count=entry['count'])
+        print('{reason} : {count}'.format(reason=entry['name'], count=entry['count']))
 
 
 def report_to_graphite(host, port, prefix, results):

@@ -1,0 +1,6 @@
+# build this image locally and use it as remote interpreter in pycharm
+
+FROM python:3
+
+COPY requirements.txt ./
+RUN pip install --no-cache-dir -r requirements.txt
