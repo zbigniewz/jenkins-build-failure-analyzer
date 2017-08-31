@@ -155,6 +155,15 @@ possible_reasons = [
             '.*java.io.IOException. Failed to mkdirs.*'
         ],
         'graphite key': 'failed_to_mkdir'
+    },
+    {
+        'name': 'unknown parameter -f when running docker tag',
+        'description': 'The parameter -f is not available anymore when calling docker tag. It causes docker tag to '
+                       'fail. To Fix this the parameter -f needs to be removed from the docker tag call.',
+        'regex': [
+            'unknown shorthand flag: \'f\' in -f'
+        ],
+        'graphite key': 'docker_tag_f'
     }
 ]
 
