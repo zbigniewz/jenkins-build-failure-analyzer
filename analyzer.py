@@ -16,7 +16,6 @@ def is_build_failed(job):
 
 
 def was_built_in_last_24h(job):
-    print job
     if 'lastBuild' in job and job['lastBuild']:
         build_date_time = datetime.utcfromtimestamp(job['lastBuild']['timestamp'] / 1e3)  # to proper timestamp
         time_diff_in_hours = (datetime.now() - build_date_time).total_seconds() / 60 / 60  # seconds to hours
