@@ -17,17 +17,17 @@ def is_build_failed(job):
 
 def was_built_in_last_24h(job):
     if 'lastBuild' in job:
-        build_date_time = datetime.utcfromtimestamp(job['lastBuild']['timestamp'] / 1e3) # to proper timestamp
-        time_diff_in_hours = (datetime.now() - build_date_time).total_seconds() / 60 / 60 # seconds to hours
+        build_date_time = datetime.utcfromtimestamp(job['lastBuild']['timestamp'] / 1e3)  # to proper timestamp
+        time_diff_in_hours = (datetime.now() - build_date_time).total_seconds() / 60 / 60  # seconds to hours
         if time_diff_in_hours < 24:
             return True
     return False
 
 
-def filter_jobs(all_jobs):
+def filter_jobs(all_jobs, only_built_in_last_24_hours=True):
     failed_jobs = []
     for job in all_jobs:
-        if is_build_failed(job) and was_built_in_last_24h(job):
+        if is_build_failed(job) and (not only_built_in_last_24_hours or was_built_in_last_24h(job)):
                     failed_jobs.append(job)
     return failed_jobs
 
@@ -63,17 +63,18 @@ def analyze_jobs(filtered_jobs, jenkins_server):
         entry['count'] = 0
         entry['job'] = []
     counter = 0
+
     for job in filtered_jobs:
         counter += 1
         print("Analyzing job {id} / {all}".format(id=counter, all=len(filtered_jobs)))
         console_output = jenkins_server.get_job_console_output(job)
         failure_reason = find_failure_reason(console_output)
         results = update_results(results, failure_reason, job)
+
     return results
 
 
 def print_results(results):
-    print('\n Full results:\n')
     pp = pprint.PrettyPrinter()
     pp.pprint(results)
     print('\n\n\n Quick summary:\n')
@@ -106,6 +107,14 @@ def main():
     filtered_jobs = filter_jobs(all_jobs)
     results = analyze_jobs(filtered_jobs, jenkins_server)
     report_to_graphite(args.statsd_host, args.statsd_port, args.graphite_key, results)
+
+    print('\n Full results (only jobs that were built and failed in last 24 hours):\n')
+    print_results(results)
+
+    filtered_jobs = filter_jobs(all_jobs, only_built_in_last_24_hours=False)
+    results = analyze_jobs(filtered_jobs, jenkins_server)
+
+    print('\n Full results (all jobs that failed):\n')
     print_results(results)
 
 
