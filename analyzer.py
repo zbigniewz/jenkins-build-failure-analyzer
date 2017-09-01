@@ -16,7 +16,8 @@ def is_build_failed(job):
 
 
 def was_built_in_last_24h(job):
-    if 'lastBuild' in job:
+    print job
+    if 'lastBuild' in job and job['lastBuild']:
         build_date_time = datetime.utcfromtimestamp(job['lastBuild']['timestamp'] / 1e3)  # to proper timestamp
         time_diff_in_hours = (datetime.now() - build_date_time).total_seconds() / 60 / 60  # seconds to hours
         if time_diff_in_hours < 24:
@@ -24,12 +25,12 @@ def was_built_in_last_24h(job):
     return False
 
 
-def filter_jobs(all_jobs, only_built_in_last_24_hours=True):
-    failed_jobs = []
-    for job in all_jobs:
-        if is_build_failed(job) and (not only_built_in_last_24_hours or was_built_in_last_24h(job)):
-                    failed_jobs.append(job)
-    return failed_jobs
+def filter_failed_jobs(all_jobs):
+    return filter(lambda job: is_build_failed(job), all_jobs)
+
+
+def filter_failed_last_24h_jobs(all_jobs):
+    return filter(lambda job: is_build_failed(job) and was_built_in_last_24h(job), all_jobs)
 
 
 def find_failure_reason(console_output):
@@ -104,14 +105,14 @@ def main():
     args = parser.parse_args()
     jenkins_server = JenkinsClient.JenkinsClient(args.jenkins_host, args.jenkins_user, args.jenkins_pass)
     all_jobs = jenkins_server.get_all_jobs()
-    filtered_jobs_only_24_hours = filter_jobs(all_jobs)
+    filtered_jobs_only_24_hours = filter_failed_last_24h_jobs(all_jobs)
     results = analyze_jobs(filtered_jobs_only_24_hours, jenkins_server)
     report_to_graphite(args.statsd_host, args.statsd_port, args.graphite_key, results)
 
     print('\n Full results (only jobs that were built and failed in last 24 hours):\n')
     print_results(results)
 
-    filtered_jobs = filter_jobs(all_jobs, only_built_in_last_24_hours=False)
+    filtered_jobs = filter_failed_jobs(all_jobs)
     results = analyze_jobs(filtered_jobs, jenkins_server)
 
     print('\n Full results (all jobs that failed):\n')
