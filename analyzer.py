@@ -25,14 +25,6 @@ def was_built_in_last_24h(job):
     return False
 
 
-def filter_failed_jobs(all_jobs):
-    return filter(lambda job: is_build_failed(job), all_jobs)
-
-
-def filter_built_last_24h_jobs(all_jobs):
-    return filter(lambda job: was_built_in_last_24h(job), all_jobs)
-
-
 def find_failure_reason(console_output):
     for reason in failureReasons.possible_reasons:
         for regex in reason['regex']:
@@ -105,15 +97,16 @@ def main():
     args = parser.parse_args()
     jenkins_server = JenkinsClient.JenkinsClient(args.jenkins_host, args.jenkins_user, args.jenkins_pass)
     all_jobs = jenkins_server.get_all_jobs()
-    filtered_jobs_only_24_hours = filter_failed_jobs(filter_built_last_24h_jobs(all_jobs))
-    results = analyze_jobs(filtered_jobs_only_24_hours, jenkins_server)
+    only_failed_jobs = filter(is_build_failed, all_jobs)
+    only_failed_in_last_24h_jobs = filter(was_built_in_last_24h, only_failed_jobs)
+
+    results = analyze_jobs(only_failed_in_last_24h_jobs, jenkins_server)
     report_to_graphite(args.statsd_host, args.statsd_port, args.graphite_key, results)
 
     print('\n Full results (only jobs that were built and failed in last 24 hours):\n')
     print_results(results)
 
-    filtered_jobs = filter_failed_jobs(all_jobs)
-    results = analyze_jobs(filtered_jobs, jenkins_server)
+    results = analyze_jobs(only_failed_jobs, jenkins_server)
 
     print('\n Full results (all jobs that failed):\n')
     print_results(results)
