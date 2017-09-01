@@ -96,8 +96,8 @@ def main():
     args = parser.parse_args()
     jenkins_server = JenkinsClient.JenkinsClient(args.jenkins_host, args.jenkins_user, args.jenkins_pass)
     all_jobs = jenkins_server.get_all_jobs()
-    only_failed_jobs = filter(is_build_failed, all_jobs)
-    only_failed_in_last_24h_jobs = filter(was_built_in_last_24h, only_failed_jobs)
+    only_failed_jobs = list(filter(is_build_failed, all_jobs))
+    only_failed_in_last_24h_jobs = list(filter(was_built_in_last_24h, only_failed_jobs))
 
     results = analyze_jobs(only_failed_in_last_24h_jobs, jenkins_server)
     report_to_graphite(args.statsd_host, args.statsd_port, args.graphite_key, results)
